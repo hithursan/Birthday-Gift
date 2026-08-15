@@ -73,3 +73,55 @@ html, body {
     font-size: 0.8rem;
     letter-spacing: 2px;
 }
+.poem-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+.poem-overlay.show { opacity: 1; }
+.poem-overlay.hide { opacity: 0; }
+.poem-container {
+    max-width: 1000px;
+    width: 100%;
+    text-align: center;
+}
+.poem-line {
+    display: block;
+    opacity: 0;
+    transform: translateY(30px);
+    margin-bottom: 30px;
+    text-shadow: 0 0 40px rgba(0,0,0,1), 0 0 80px rgba(0,0,0,0.9);
+}
+.poem-line.line-cursive {
+    font-family: 'Lavishly Yours', cursive;
+    font-size: 7rem;
+    background: linear-gradient(135deg, #d4af37, #f5d780, #d4af37);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: goldShimmer 4s ease infinite;
+    line-height: 1.2;
+    margin-bottom: 50px;
+}
+.poem-line.line-body {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2.2rem;
+    color: #fff;
+    line-height: 1.6;
+    letter-spacing: 2px;
+}
+@keyframes goldShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
