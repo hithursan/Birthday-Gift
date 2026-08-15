@@ -20,3 +20,56 @@ html, body {
     background: linear-gradient(180deg, #d4af37, #6b21a8);
     border-radius: 10px;
 }
+#threeCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: block;
+}
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1s ease;
+}
+.loader.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+.loader-content { 
+    text-align: center; 
+}
+.loader-circle {
+    width: 60px;
+    height: 60px;
+    border: 2px solid rgba(212, 175, 55, 0.2);
+    border-top: 2px solid #d4af37;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin { 
+    to { transform: rotate(360deg); } 
+}
+.loader-text {
+    font-family: 'Cinzel Decorative', serif;
+    color: #d4af37;
+    letter-spacing: 3px;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+.loader-progress {
+    color: #888;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+}
