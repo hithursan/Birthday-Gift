@@ -175,3 +175,64 @@ html, body {
     50% { opacity: 1; }
     100% { opacity: 0; transform: rotate(45deg) translate(8px, 8px); }
 }
+.chapters-container {
+    position: relative;
+    z-index: 20;
+    margin-top: 100vh;
+}
+.chapter {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    position: relative;
+}
+.chapter-card {
+    max-width: 700px;
+    width: 100%;
+    padding: 60px 50px;
+    border-radius: 24px;
+    position: relative;
+
+    opacity: 0.15;
+    filter: blur(8px);
+    transform: scale(0.9);
+    transition:
+        opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        filter 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.chapter-card.focused {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+}
+.chapter-card.preview {
+    opacity: 0.35;
+    filter: blur(6px);
+    transform: scale(0.92);
+}
+.chapter-card.passed {
+    opacity: 0.08;
+    filter: blur(10px);
+    transform: scale(0.85);
+}
+.chapter-floating {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.chapter-solid {
+    background: linear-gradient(135deg,
+        rgba(20, 15, 40, 0.95) 0%,
+        rgba(10, 5, 25, 0.98) 100%);
+    border: 2px solid rgba(212, 175, 55, 0.5);
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.7),
+        0 0 100px rgba(212, 175, 55, 0.15);
+}
