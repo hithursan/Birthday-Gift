@@ -438,3 +438,32 @@ html, body {
     letter-spacing: 2px;
     text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
 }
+.chapter-final { 
+    text-align: center; 
+}
+.chapter-final .chapter-content { 
+    text-align: center; 
+}
+.final-signature {
+    margin-top: 50px;
+    text-align: right;
+}
+.signature-text {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-size: 1.1rem !important;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 10px !important;
+}
+.signature-name {
+    font-family: 'Lavishly Yours', cursive !important;
+    font-size: 3rem !important;
+    background: linear-gradient(135deg, #d4af37, #f5d780, #d4af37) !important;
+    background-size: 200% 200% !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    animation: goldShimmer 4s ease infinite;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+}
