@@ -379,3 +379,62 @@ html, body {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.2); }
 }
+.chapter-birthday { 
+    text-align: center; 
+}
+.chapter-birthday .chapter-content { 
+    text-align: center; 
+}
+.birthday-icon {
+    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+}
+.cake-visual {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    background: radial-gradient(circle, #d4af37, #b8860b);
+    border-radius: 15px 15px 20px 20px;
+    box-shadow:
+        0 0 40px rgba(212, 175, 55, 0.5),
+        inset 0 -20px 30px rgba(0, 0, 0, 0.3);
+}
+.cake-visual::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 25px;
+    background: linear-gradient(180deg, #f5d780, #d4af37);
+    border-radius: 2px;
+}
+.candle-flame {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 15px;
+    background: radial-gradient(ellipse at center bottom, #fff, #ffdd44, #ff8800);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: flicker 0.5s ease infinite alternate;
+    box-shadow:
+        0 0 15px rgba(255, 200, 50, 0.8),
+        0 0 30px rgba(255, 150, 50, 0.5);
+}
+@keyframes flicker {
+    0% { transform: translateX(-50%) scale(1) rotate(-3deg); }
+    100% { transform: translateX(-50%) scale(1.1) rotate(3deg); }
+}
+.birthday-wish {
+    font-family: 'Cinzel Decorative', serif !important;
+    font-size: 1.8rem !important;
+    color: #d4af37 !important;
+    text-align: center;
+    margin-top: 30px !important;
+    letter-spacing: 2px;
+    text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+}
