@@ -321,3 +321,61 @@ html, body {
     margin-bottom: 0 !important; 
     font-style: italic; 
 }
+.chapter-letter .chapter-cursive {
+    font-size: 2.5rem;
+    text-align: left;
+    margin-bottom: 20px;
+}
+.letter-content p { 
+    font-style: italic; 
+    line-height: 2.2; 
+}
+.letter-signature {
+    font-family: 'Lavishly Yours', cursive !important;
+    font-size: 2.5rem !important;
+    color: #d4af37 !important;
+    text-align: right !important;
+    margin-top: 30px !important;
+    font-style: normal !important;
+}
+.promises-list { 
+    text-align: left; 
+}
+.promise-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+.promise-item:last-child { 
+    border-bottom: none; 
+}
+.promise-num {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #d4af37;
+    min-width: 40px;
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+.promise-item p { 
+    margin-bottom: 0 !important; 
+    font-size: 1.15rem !important; 
+}
+.strength-symbol {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 2rem;
+    letter-spacing: 20px;
+    color: #d4af37;
+}
+.symbol-heart {
+    animation: heartBeat 2s ease infinite;
+    display: inline-block;
+}
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
