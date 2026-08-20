@@ -521,3 +521,62 @@ html, body {
         font-size: 1.3rem !important; 
     }
 }
+
+@media (max-width: 480px) {
+    .poem-line.line-cursive { 
+        font-size: 3rem; 
+    }
+
+    .poem-line.line-body { 
+        font-size: 1.05rem; 
+    }
+
+    .chapter-card {
+        padding: 30px 20px;
+    }
+
+    .chapter-title { 
+        font-size: 1.5rem; 
+    }
+
+    .chapter-cursive { 
+        font-size: 2rem; 
+    }
+
+    .chapter-content p {
+        font-size: 0.95rem;
+        line-height: 1.7;
+    }
+
+    .chapter-highlight { 
+        font-size: 0.95rem !important;
+        padding: 15px;
+    }
+
+    .chapter-highlight-large { 
+        font-size: 2.5rem !important; 
+    }
+
+    .promise-item {
+        gap: 12px;
+        padding: 15px 0;
+    }
+
+    .promise-num {
+        font-size: 1.2rem;
+        min-width: 25px;
+    }
+
+    .birthday-wish {
+        font-size: 1.1rem !important;
+    }
+
+    .signature-name {
+        font-size: 1.8rem !important;
+    }
+
+    .strength-symbol {
+        font-size: 1.5rem;
+        letter-spacing: 10px;
+    }
+}
