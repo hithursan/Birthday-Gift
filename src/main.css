@@ -467,3 +467,57 @@ html, body {
     line-height: 1.2 !important;
     margin: 0 !important;
 }
+
+@media (max-width: 768px) {
+    .poem-line.line-cursive { 
+        font-size: 4rem; 
+    }
+
+    .poem-line.line-body { 
+        font-size: 1.3rem; 
+        letter-spacing: 1px; 
+    }
+
+    .chapter-card { 
+        padding: 40px 25px; 
+    }
+
+    .chapter-title { 
+        font-size: 1.8rem; 
+        letter-spacing: 2px; 
+    }
+
+    .chapter-cursive { 
+        font-size: 2.5rem; 
+    }
+
+    .chapter-content p { 
+        font-size: 1.05rem; 
+        line-height: 1.8; 
+    }
+
+    .chapter-highlight { 
+        font-size: 1.1rem !important; 
+    }
+
+    .chapter-highlight-large { 
+        font-size: 3rem !important; 
+    }
+
+    .promise-num { 
+        font-size: 1.4rem; 
+        min-width: 30px; 
+    }
+
+    .promise-item p { 
+        font-size: 1rem !important; 
+    }
+
+    .signature-name { 
+        font-size: 2.2rem !important; 
+    }
+
+    .birthday-wish { 
+        font-size: 1.3rem !important; 
+    }
+}
