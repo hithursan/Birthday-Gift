@@ -59,3 +59,37 @@ const textures = {
     neptune: textureLoader.load('/textures/planets/neptune.jpg'),
     stars: textureLoader.load('/textures/sky/stars.jpg'),
 };
+
+const starsGeometry = new THREE.SphereGeometry(40000, 64, 64);
+const starsMaterial = new THREE.MeshBasicMaterial({
+    map: textures.stars,
+    side: THREE.BackSide,
+});
+const starField = new THREE.Mesh(starsGeometry, starsMaterial);
+scene.add(starField);
+
+const starsGeo = new THREE.BufferGeometry();
+const starsCount = 10000;
+const starsPositions = new Float32Array(starsCount * 3);
+
+for (let i = 0; i < starsCount; i++) {
+    const radius = 5000 + Math.random() * 25000;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos((Math.random() * 2) - 1);
+    starsPositions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+    starsPositions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+    starsPositions[i * 3 + 2] = radius * Math.cos(phi);
+}
+
+starsGeo.setAttribute('position', new THREE.BufferAttribute(starsPositions, 3));
+
+const starsPointMaterial = new THREE.PointsMaterial({
+    color: 0xffffff,
+    size: 5,
+    transparent: true,
+    opacity: 0.9,
+    sizeAttenuation: true,
+});
+
+const glowStars = new THREE.Points(starsGeo, starsPointMaterial);
+scene.add(glowStars);
