@@ -133,3 +133,11 @@ const sunGlowMat = new THREE.ShaderMaterial({
 });
 const sunGlow = new THREE.Mesh(sunGlowGeo, sunGlowMat);
 scene.add(sunGlow);
+
+
+const sunLight = new THREE.PointLight(0xffffff, 3, 0, 0);
+sunLight.position.set(0, 0, 0);
+scene.add(sunLight);
+
+const ambientLight = new THREE.AmbientLight(0x333344, 0.3);
+scene.add(ambientLight);
