@@ -102,3 +102,34 @@ const sunMaterial = new THREE.MeshBasicMaterial({
 });
 const sun = new THREE.Mesh(sunGeometry, sunMaterial);
 scene.add(sun);
+
+const sunGlowGeo = new THREE.SphereGeometry(70, 32, 32);
+const sunGlowMat = new THREE.ShaderMaterial({
+    uniforms: {
+        c: { value: 0.4 },
+        p: { value: 5.0 },
+        glowColor: { value: new THREE.Color(0xffdd88) },
+    },
+    vertexShader: `
+        varying vec3 vNormal;
+        void main() {
+            vNormal = normalize(normalMatrix * normal);
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+    `,
+    fragmentShader: `
+        uniform vec3 glowColor;
+        uniform float c;
+        uniform float p;
+        varying vec3 vNormal;
+        void main() {
+            float intensity = pow(c - dot(vNormal, vec3(0.0, 0.0, 1.0)), p);
+            gl_FragColor = vec4(glowColor, 1.0) * intensity;
+        }
+    `,
+    side: THREE.BackSide,
+    blending: THREE.AdditiveBlending,
+    transparent: true,
+});
+const sunGlow = new THREE.Mesh(sunGlowGeo, sunGlowMat);
+scene.add(sunGlow);
