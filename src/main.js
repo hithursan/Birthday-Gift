@@ -93,3 +93,12 @@ const starsPointMaterial = new THREE.PointsMaterial({
 
 const glowStars = new THREE.Points(starsGeo, starsPointMaterial);
 scene.add(glowStars);
+
+
+const sunGeometry = new THREE.SphereGeometry(60, 64, 64);
+const sunMaterial = new THREE.MeshBasicMaterial({
+    map: textures.sun,
+    color: 0xfff5e0,
+});
+const sun = new THREE.Mesh(sunGeometry, sunMaterial);
+scene.add(sun);
