@@ -154,3 +154,27 @@ const planetData = [
     { name: 'Uranus',  size: 22, distance: 880,  speed: 0.001,  texture: textures.uranus,  tilt: 1.71 },
     { name: 'Neptune', size: 21, distance: 1050, speed: 0.0008, texture: textures.neptune, tilt: 0.49 },
 ];
+
+planetData.forEach((data) => {
+    const planetGroup = new THREE.Group();
+    scene.add(planetGroup);
+
+    const geometry = new THREE.SphereGeometry(data.size, 64, 64);
+    const material = new THREE.MeshStandardMaterial({
+        map: data.texture,
+        roughness: 0.8,
+        metalness: 0.1,
+    });
+    const planet = new THREE.Mesh(geometry, material);
+    planet.position.x = data.distance;
+    planet.rotation.z = data.tilt;
+    planetGroup.add(planet);
+
+    planetGroup.rotation.y = Math.random() * Math.PI * 2;
+
+    planets.push({
+        group: planetGroup,
+        mesh: planet,
+        data: data,
+    });
+});
