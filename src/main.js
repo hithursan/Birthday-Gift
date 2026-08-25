@@ -178,3 +178,32 @@ planetData.forEach((data) => {
         data: data,
     });
 });
+    // ============================================
+    // EARTH CLOUDS
+    // ============================================
+    if (data.hasClouds) {
+        const cloudGeo = new THREE.SphereGeometry(data.size * 1.02, 64, 64);
+        const cloudMat = new THREE.MeshStandardMaterial({
+            map: textures.earthClouds,
+            transparent: true,
+            opacity: 0.4,
+            depthWrite: false,
+        });
+        const clouds = new THREE.Mesh(cloudGeo, cloudMat);
+        planet.add(clouds);
+        planet.userData.clouds = clouds;
+    }
+
+   
+    if (data.hasRings) {
+        const ringGeo = new THREE.RingGeometry(data.size * 1.4, data.size * 2.3, 64);
+        const ringMat = new THREE.MeshBasicMaterial({
+            map: textures.saturnRing,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.8,
+        });
+        const rings = new THREE.Mesh(ringGeo, ringMat);
+        rings.rotation.x = Math.PI / 2 - 0.3;
+        planet.add(rings);
+    }
