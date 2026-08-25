@@ -141,3 +141,16 @@ scene.add(sunLight);
 
 const ambientLight = new THREE.AmbientLight(0x333344, 0.3);
 scene.add(ambientLight);
+
+const planets = [];
+
+const planetData = [
+    { name: 'Mercury', size: 8,  distance: 150,  speed: 0.008,  texture: textures.mercury, tilt: 0.03 },
+    { name: 'Venus',   size: 14, distance: 220,  speed: 0.006,  texture: textures.venus,   tilt: 3.09 },
+    { name: 'Earth',   size: 16, distance: 310,  speed: 0.005,  texture: textures.earth,   tilt: 0.41, hasClouds: true },
+    { name: 'Mars',    size: 11, distance: 400,  speed: 0.004,  texture: textures.mars,    tilt: 0.44 },
+    { name: 'Jupiter', size: 42, distance: 550,  speed: 0.002,  texture: textures.jupiter, tilt: 0.05 },
+    { name: 'Saturn',  size: 36, distance: 720,  speed: 0.0015, texture: textures.saturn,  tilt: 0.47, hasRings: true },
+    { name: 'Uranus',  size: 22, distance: 880,  speed: 0.001,  texture: textures.uranus,  tilt: 1.71 },
+    { name: 'Neptune', size: 21, distance: 1050, speed: 0.0008, texture: textures.neptune, tilt: 0.49 },
+];
