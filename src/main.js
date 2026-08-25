@@ -207,3 +207,23 @@ planetData.forEach((data) => {
         rings.rotation.x = Math.PI / 2 - 0.3;
         planet.add(rings);
     }
+       
+    const orbitPoints = [];
+    for (let i = 0; i <= 256; i++) {
+        const angle = (i / 256) * Math.PI * 2;
+        orbitPoints.push(
+            new THREE.Vector3(
+                Math.cos(angle) * data.distance,
+                0,
+                Math.sin(angle) * data.distance
+            )
+        );
+    }
+    const orbitGeo = new THREE.BufferGeometry().setFromPoints(orbitPoints);
+    const orbitMat = new THREE.LineBasicMaterial({
+        color: 0x88aacc,
+        transparent: true,
+        opacity: 0.4,
+    });
+    const orbit = new THREE.LineLoop(orbitGeo, orbitMat);
+    scene.add(orbit);
