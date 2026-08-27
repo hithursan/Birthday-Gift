@@ -290,3 +290,80 @@ function showPoem() {
         currentStage = 'scroll-ready';
     }, 12000);
 }
+
+const chapterCameraPositions = [
+    { x: 200, y: 300, z: 900 },
+    { x: 0, y: 400, z: -2000 },
+    { x: -500, y: 500, z: -4000 },
+    { x: 300, y: 600, z: -6000 },
+    { x: -300, y: 400, z: -8000 },
+    { x: 500, y: 700, z: -10000 },
+    { x: -400, y: 500, z: -12000 },
+    { x: 200, y: 800, z: -14000 },
+];
+
+let scrollStarted = false;
+
+window.addEventListener('scroll', () => {
+    if (currentStage !== 'scroll-ready' && currentStage !== 'exploring') return;
+
+    if (window.scrollY > 50 && !scrollStarted) {
+        scrollStarted = true;
+        currentStage = 'exploring';
+        document.getElementById('scrollInstruction').classList.add('hide');
+        document.getElementById('poemOverlay').classList.add('hide');
+    }
+
+    if (!scrollStarted) return;
+
+    const chapters = document.querySelectorAll('.chapter');
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+
+    const chaptersStart = windowHeight;
+    const chapterHeight = windowHeight;
+
+    const chapterProgress = (scrollY - chaptersStart) / chapterHeight;
+
+    const chapterFloat = Math.max(0, Math.min(7, chapterProgress + 1));
+    const chapterInt = Math.floor(chapterFloat);
+    const chapterFrac = chapterFloat - chapterInt;
+
+    const fromPos = chapterCameraPositions[Math.min(chapterInt, 7)];
+    const toPos = chapterCameraPositions[Math.min(chapterInt + 1, 7)];
+
+    if (fromPos && toPos) {
+        const targetX = fromPos.x + (toPos.x - fromPos.x) * chapterFrac;
+        const targetY = fromPos.y + (toPos.y - fromPos.y) * chapterFrac;
+        const targetZ = fromPos.z + (toPos.z - fromPos.z) * chapterFrac;
+
+        gsap.to(camera.position, {
+            x: targetX,
+            y: targetY,
+            z: targetZ,
+            duration: 1.5,
+            ease: 'power2.out',
+            overwrite: true,
+            onUpdate: () => camera.lookAt(0, 0, 0),
+        });
+    }
+
+    // Chapter card focus/blur system
+    chapters.forEach((chapter) => {
+        const card = chapter.querySelector('.chapter-card');
+        const rect = chapter.getBoundingClientRect();
+        const viewportCenter = window.innerHeight / 2;
+        const cardCenter = rect.top + rect.height / 2;
+        const distance = cardCenter - viewportCenter;
+
+        card.classList.remove('focused', 'preview', 'passed');
+
+        if (Math.abs(distance) < window.innerHeight * 0.35) {
+            card.classList.add('focused');
+        } else if (distance > 0 && distance < window.innerHeight * 1.2) {
+            card.classList.add('preview');
+        } else if (distance < 0) {
+            card.classList.add('passed');
+        }
+    });
+});
