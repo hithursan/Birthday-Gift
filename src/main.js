@@ -227,3 +227,48 @@ planetData.forEach((data) => {
     });
     const orbit = new THREE.LineLoop(orbitGeo, orbitMat);
     scene.add(orbit);
+
+    // ============================================
+// INTRO ANIMATION
+// ============================================
+let currentStage = 'loading';
+
+function startIntroAnimation() {
+    currentStage = 'intro';
+
+    camera.position.set(0, 30, 150);
+    camera.lookAt(0, 0, 0);
+
+    const tl = gsap.timeline();
+
+    tl.to(camera.position, {
+        x: 0, y: 150, z: 400,
+        duration: 5, ease: 'power2.out',
+        onUpdate: () => camera.lookAt(0, 0, 0),
+    });
+
+    tl.to(camera.position, {
+        x: 200, y: 350, z: 1000,
+        duration: 12, ease: 'power2.inOut',
+        onUpdate: () => camera.lookAt(0, 0, 0),
+    });
+
+    tl.to(camera.position, {
+        x: 300, y: 500, z: 1400,
+        duration: 6, ease: 'power2.out',
+        onUpdate: () => camera.lookAt(0, 0, 0),
+        onComplete: () => {
+            currentStage = 'poem';
+            showPoem();
+            zoomInForPoem();
+        }
+    });
+}
+
+function zoomInForPoem() {
+    gsap.to(camera.position, {
+        x: 200, y: 300, z: 900,
+        duration: 4, ease: 'power2.inOut',
+        onUpdate: () => camera.lookAt(0, 0, 0),
+    });
+}
