@@ -228,9 +228,6 @@ planetData.forEach((data) => {
     const orbit = new THREE.LineLoop(orbitGeo, orbitMat);
     scene.add(orbit);
 
-    // ============================================
-// INTRO ANIMATION
-// ============================================
 let currentStage = 'loading';
 
 function startIntroAnimation() {
@@ -271,4 +268,25 @@ function zoomInForPoem() {
         duration: 4, ease: 'power2.inOut',
         onUpdate: () => camera.lookAt(0, 0, 0),
     });
+}
+
+function showPoem() {
+    const overlay = document.getElementById('poemOverlay');
+    overlay.classList.add('show');
+
+    const lines = document.querySelectorAll('.poem-line');
+    lines.forEach((line, i) => {
+        gsap.to(line, {
+            opacity: 1, 
+            y: 0,
+            duration: 2, 
+            delay: 1 + i * 2,
+            ease: 'power2.out',
+        });
+    });
+
+    setTimeout(() => {
+        document.getElementById('scrollInstruction').classList.add('show');
+        currentStage = 'scroll-ready';
+    }, 12000);
 }
