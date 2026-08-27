@@ -367,3 +367,29 @@ window.addEventListener('scroll', () => {
         }
     });
 });
+
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    // Sun rotation
+    sun.rotation.y += 0.002;
+
+    // Planet rotations
+    planets.forEach((p) => {
+        p.group.rotation.y += p.data.speed;
+        p.mesh.rotation.y += 0.005;
+
+        if (p.mesh.userData.clouds) {
+            p.mesh.userData.clouds.rotation.y += 0.0008;
+        }
+    });
+
+    // Star field slow rotation
+    starField.rotation.y += 0.00003;
+    glowStars.rotation.y += 0.00003;
+
+    renderer.render(scene, camera);
+}
+
+animate();
