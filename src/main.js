@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 
-
 const canvas = document.getElementById('threeCanvas');
 const scene = new THREE.Scene();
 
@@ -22,13 +21,6 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.0;
-
-
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
 
 const loadingManager = new THREE.LoadingManager();
 const textureLoader = new THREE.TextureLoader(loadingManager);
@@ -94,7 +86,6 @@ const starsPointMaterial = new THREE.PointsMaterial({
 const glowStars = new THREE.Points(starsGeo, starsPointMaterial);
 scene.add(glowStars);
 
-
 const sunGeometry = new THREE.SphereGeometry(60, 64, 64);
 const sunMaterial = new THREE.MeshBasicMaterial({
     map: textures.sun,
@@ -134,7 +125,6 @@ const sunGlowMat = new THREE.ShaderMaterial({
 const sunGlow = new THREE.Mesh(sunGlowGeo, sunGlowMat);
 scene.add(sunGlow);
 
-
 const sunLight = new THREE.PointLight(0xffffff, 3, 0, 0);
 sunLight.position.set(0, 0, 0);
 scene.add(sunLight);
@@ -145,20 +135,20 @@ scene.add(ambientLight);
 const planets = [];
 
 const planetData = [
-    { name: 'Mercury', size: 8,  distance: 150,  speed: 0.008,  texture: textures.mercury, tilt: 0.03 },
-    { name: 'Venus',   size: 14, distance: 220,  speed: 0.006,  texture: textures.venus,   tilt: 3.09 },
-    { name: 'Earth',   size: 16, distance: 310,  speed: 0.005,  texture: textures.earth,   tilt: 0.41, hasClouds: true },
-    { name: 'Mars',    size: 11, distance: 400,  speed: 0.004,  texture: textures.mars,    tilt: 0.44 },
-    { name: 'Jupiter', size: 42, distance: 550,  speed: 0.002,  texture: textures.jupiter, tilt: 0.05 },
-    { name: 'Saturn',  size: 36, distance: 720,  speed: 0.0015, texture: textures.saturn,  tilt: 0.47, hasRings: true },
-    { name: 'Uranus',  size: 22, distance: 880,  speed: 0.001,  texture: textures.uranus,  tilt: 1.71 },
+    { name: 'Mercury', size: 8, distance: 150, speed: 0.008, texture: textures.mercury, tilt: 0.03 },
+    { name: 'Venus', size: 14, distance: 220, speed: 0.006, texture: textures.venus, tilt: 3.09 },
+    { name: 'Earth', size: 16, distance: 310, speed: 0.005, texture: textures.earth, tilt: 0.41, hasClouds: true },
+    { name: 'Mars', size: 11, distance: 400, speed: 0.004, texture: textures.mars, tilt: 0.44 },
+    { name: 'Jupiter', size: 42, distance: 550, speed: 0.002, texture: textures.jupiter, tilt: 0.05 },
+    { name: 'Saturn', size: 36, distance: 720, speed: 0.0015, texture: textures.saturn, tilt: 0.47, hasRings: true },
+    { name: 'Uranus', size: 22, distance: 880, speed: 0.001, texture: textures.uranus, tilt: 1.71 },
     { name: 'Neptune', size: 21, distance: 1050, speed: 0.0008, texture: textures.neptune, tilt: 0.49 },
 ];
 
 planetData.forEach((data) => {
     const planetGroup = new THREE.Group();
     scene.add(planetGroup);
-
+    
     const geometry = new THREE.SphereGeometry(data.size, 64, 64);
     const material = new THREE.MeshStandardMaterial({
         map: data.texture,
@@ -169,18 +159,7 @@ planetData.forEach((data) => {
     planet.position.x = data.distance;
     planet.rotation.z = data.tilt;
     planetGroup.add(planet);
-
-    planetGroup.rotation.y = Math.random() * Math.PI * 2;
-
-    planets.push({
-        group: planetGroup,
-        mesh: planet,
-        data: data,
-    });
-});
-    // ============================================
-    // EARTH CLOUDS
-    // ============================================
+    
     if (data.hasClouds) {
         const cloudGeo = new THREE.SphereGeometry(data.size * 1.02, 64, 64);
         const cloudMat = new THREE.MeshStandardMaterial({
@@ -193,8 +172,7 @@ planetData.forEach((data) => {
         planet.add(clouds);
         planet.userData.clouds = clouds;
     }
-
-   
+    
     if (data.hasRings) {
         const ringGeo = new THREE.RingGeometry(data.size * 1.4, data.size * 2.3, 64);
         const ringMat = new THREE.MeshBasicMaterial({
@@ -207,7 +185,7 @@ planetData.forEach((data) => {
         rings.rotation.x = Math.PI / 2 - 0.3;
         planet.add(rings);
     }
-       
+    
     const orbitPoints = [];
     for (let i = 0; i <= 256; i++) {
         const angle = (i / 256) * Math.PI * 2;
@@ -227,29 +205,39 @@ planetData.forEach((data) => {
     });
     const orbit = new THREE.LineLoop(orbitGeo, orbitMat);
     scene.add(orbit);
+    
+    planetGroup.rotation.y = Math.random() * Math.PI * 2;
+    
+    planets.push({
+        group: planetGroup,
+        mesh: planet,
+        data: data,
+        orbit: orbit,
+    });
+});
 
 let currentStage = 'loading';
 
 function startIntroAnimation() {
     currentStage = 'intro';
-
+    
     camera.position.set(0, 30, 150);
     camera.lookAt(0, 0, 0);
-
+    
     const tl = gsap.timeline();
-
+    
     tl.to(camera.position, {
         x: 0, y: 150, z: 400,
         duration: 5, ease: 'power2.out',
         onUpdate: () => camera.lookAt(0, 0, 0),
     });
-
+    
     tl.to(camera.position, {
         x: 200, y: 350, z: 1000,
         duration: 12, ease: 'power2.inOut',
         onUpdate: () => camera.lookAt(0, 0, 0),
     });
-
+    
     tl.to(camera.position, {
         x: 300, y: 500, z: 1400,
         duration: 6, ease: 'power2.out',
@@ -273,18 +261,16 @@ function zoomInForPoem() {
 function showPoem() {
     const overlay = document.getElementById('poemOverlay');
     overlay.classList.add('show');
-
+    
     const lines = document.querySelectorAll('.poem-line');
     lines.forEach((line, i) => {
         gsap.to(line, {
-            opacity: 1, 
-            y: 0,
-            duration: 2, 
-            delay: 1 + i * 2,
+            opacity: 1, y: 0,
+            duration: 2, delay: 1 + i * 2,
             ease: 'power2.out',
         });
     });
-
+    
     setTimeout(() => {
         document.getElementById('scrollInstruction').classList.add('show');
         currentStage = 'scroll-ready';
@@ -292,51 +278,67 @@ function showPoem() {
 }
 
 const chapterCameraPositions = [
+    // Start position (after poem)
     { x: 200, y: 300, z: 900 },
+    // Chapter 1
     { x: 0, y: 400, z: -2000 },
+    // Chapter 2
     { x: -500, y: 500, z: -4000 },
+    // Chapter 3
     { x: 300, y: 600, z: -6000 },
+    // Chapter 4
     { x: -300, y: 400, z: -8000 },
+    // Chapter 5
     { x: 500, y: 700, z: -10000 },
+    // Chapter 6
     { x: -400, y: 500, z: -12000 },
+    // Chapter 7
     { x: 200, y: 800, z: -14000 },
 ];
 
 let scrollStarted = false;
+let currentCameraTarget = { x: 200, y: 300, z: 900 };
 
 window.addEventListener('scroll', () => {
     if (currentStage !== 'scroll-ready' && currentStage !== 'exploring') return;
-
+    
+    // First scroll — start exploration
     if (window.scrollY > 50 && !scrollStarted) {
         scrollStarted = true;
         currentStage = 'exploring';
         document.getElementById('scrollInstruction').classList.add('hide');
         document.getElementById('poemOverlay').classList.add('hide');
     }
-
+    
     if (!scrollStarted) return;
-
+    
+    // Calculate scroll progress across all chapters
     const chapters = document.querySelectorAll('.chapter');
     const scrollY = window.scrollY;
     const windowHeight = window.innerHeight;
-
-    const chaptersStart = windowHeight;
-    const chapterHeight = windowHeight;
-
+    
+    // Total scrollable area for chapters
+    const chaptersStart = windowHeight; // First chapter starts at 100vh
+    const chapterHeight = windowHeight; // Each chapter is 100vh
+    
+    // Which chapter is currently in focus
     const chapterProgress = (scrollY - chaptersStart) / chapterHeight;
-
+    const activeChapterIndex = Math.max(0, Math.min(6, Math.floor(chapterProgress + 0.3)));
+    
+    // Smoothly interpolate camera between chapters based on scroll
     const chapterFloat = Math.max(0, Math.min(7, chapterProgress + 1));
     const chapterInt = Math.floor(chapterFloat);
     const chapterFrac = chapterFloat - chapterInt;
-
+    
     const fromPos = chapterCameraPositions[Math.min(chapterInt, 7)];
     const toPos = chapterCameraPositions[Math.min(chapterInt + 1, 7)];
-
+    
     if (fromPos && toPos) {
         const targetX = fromPos.x + (toPos.x - fromPos.x) * chapterFrac;
         const targetY = fromPos.y + (toPos.y - fromPos.y) * chapterFrac;
         const targetZ = fromPos.z + (toPos.z - fromPos.z) * chapterFrac;
-
+        
+        // Smooth camera movement
         gsap.to(camera.position, {
             x: targetX,
             y: targetY,
@@ -347,18 +349,19 @@ window.addEventListener('scroll', () => {
             onUpdate: () => camera.lookAt(0, 0, 0),
         });
     }
-
-    // Chapter card focus/blur system
-    chapters.forEach((chapter) => {
+    
+    // Update chapter card states (focused, preview, passed)
+    chapters.forEach((chapter, index) => {
         const card = chapter.querySelector('.chapter-card');
         const rect = chapter.getBoundingClientRect();
         const viewportCenter = window.innerHeight / 2;
         const cardCenter = rect.top + rect.height / 2;
         const distance = cardCenter - viewportCenter;
-
+        const absDistance = Math.abs(distance);
+        
         card.classList.remove('focused', 'preview', 'passed');
-
-        if (Math.abs(distance) < window.innerHeight * 0.35) {
+        
+        if (absDistance < window.innerHeight * 0.35) {
             card.classList.add('focused');
         } else if (distance > 0 && distance < window.innerHeight * 1.2) {
             card.classList.add('preview');
@@ -368,28 +371,31 @@ window.addEventListener('scroll', () => {
     });
 });
 
-
 function animate() {
     requestAnimationFrame(animate);
-
-    // Sun rotation
+    
     sun.rotation.y += 0.002;
-
-    // Planet rotations
+    
     planets.forEach((p) => {
         p.group.rotation.y += p.data.speed;
         p.mesh.rotation.y += 0.005;
-
+        
         if (p.mesh.userData.clouds) {
             p.mesh.userData.clouds.rotation.y += 0.0008;
         }
     });
-
-    // Star field slow rotation
+    
     starField.rotation.y += 0.00003;
     glowStars.rotation.y += 0.00003;
-
+    
     renderer.render(scene, camera);
 }
 
 animate();
+
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
